@@ -34,8 +34,6 @@ class _HomePageState extends State<HomePage> {
         actions: _buildActions(),
       ),
       body: WordList(),
-
-
     );
   }
 
