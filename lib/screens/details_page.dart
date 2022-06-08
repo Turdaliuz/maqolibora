@@ -42,8 +42,6 @@ final mainProvider = Provider.of<MainProvider> (context, listen: false);
       await flutterTts.setVolume(1.0);
       await flutterTts.setPitch(1);
     }
-
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

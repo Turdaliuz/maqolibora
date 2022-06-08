@@ -5,7 +5,6 @@ class Word {
 
   Word(this.rus, this.uzb);
 
-
   Map<String, Object?> toMap() {
     var map = <String, Object?>{
       "rus": rus,
