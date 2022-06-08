@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget _buildSearchField() {
     return TextField(
       autocorrect: true,
