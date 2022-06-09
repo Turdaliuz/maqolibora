@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ozbekcha_inglizcha_iboralar/models/word.dart';
+import 'package:ozbekcha_inglizcha_iboralar/screens/widgets/word_item.dart';
 import 'package:ozbekcha_inglizcha_iboralar/settings/main_provider.dart';
-import 'package:ozbekcha_inglizcha_iboralar/screens/details_page.dart';
 import 'package:provider/provider.dart';
 
 class SavedUz extends StatelessWidget {
@@ -9,25 +10,33 @@ class SavedUz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider> (context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: Image.asset('assets/image/img_3.png', width: 30,),
-
-        ),
-        title: const Text("Saqlanganlar", style: TextStyle(fontSize: 22, fontFamily: 'Josef'),),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(24),
-              bottomLeft: Radius.circular(24)),
-        ),
-        elevation: 1000,
-      ),
-
-      body:  Center(child: Text("Mavjud emas"),)
-
-    );
+    return Consumer<MainProvider>(builder: (context, data, child) {
+      return FutureBuilder(
+          future: mainProvider.getFavList(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return GridView.builder(
+                  padding: const EdgeInsets.only(top: 24, bottom: 24),
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 2 / 1,
+                      crossAxisCount: 1,
+                      mainAxisExtent: 350,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 32),
+                  itemBuilder: (BuildContext context, int index) {
+                    return WordItem(
+                      Word.word[snapshot.data[index]],
+                      snapshot.data[index],
+                      isWord: true,
+                    );
+                  });
+            }
+          });
+    });
   }
 }
 

@@ -11,17 +11,12 @@ import '../main.dart';
 class DetailsPage extends StatefulWidget {
   final Word word;
   final bool isWord;
-  const DetailsPage(this.word, this.isWord);
+  // final int index;
+  const DetailsPage(this.word, this.isWord, {super.key});
 
   @override
   State<DetailsPage> createState() => _DetailsPage();
 }
-
-
-
-
-
-
 
 
 
@@ -38,7 +33,7 @@ final mainProvider = Provider.of<MainProvider> (context, listen: false);
     Future _speak() async{
       await flutterTts.speak(widget.isWord ? widget.word.uzb! : widget.word.rus ?? "...");
       await flutterTts.setLanguage("en-GB");
-      await flutterTts.setSpeechRate(0.2);
+      await flutterTts.setSpeechRate(0.4);
       await flutterTts.setVolume(1.0);
       await flutterTts.setPitch(1);
     }
@@ -148,13 +143,13 @@ SizedBox(width: 12),
 SizedBox(width: 12),
                         Text("Saqlab qo'yish", style: TextStyle(fontSize: 17),),
                       ],),),
-
-
                     onPressed: (){
-
+                      if (widget.isWord) {
+                        removeFromFavorite(widget.index);
+                      } else {
+                        addToFavorite();
+                      }
                     }
-
-
                     ),),
               const SizedBox(height: 6),
               Container(
@@ -174,12 +169,35 @@ SizedBox(width: 12),
                       ],),),
                     onPressed: () {Share.share(widget.isWord ? widget.word.uzb! : widget.word.rus ?? "...",);}
                 ),),
-
-
             ],),
 
       ],),
     );
   }
+
+
+void addToFavorite() async {
+  final mainProvider = Provider.of<MainProvider>(context, listen: false);
+
+  List<int> favList = await mainProvider.getFavList();
+  var newList = List.of(favList);
+  if (!newList.contains(widget.index)) {
+    newList.add(widget.index);
+  }
+  mainProvider.setFavList(newList);
 }
+
+void removeFromFavorite(index) async {
+  final mainProvider = Provider.of<MainProvider>(context, listen: false);
+
+  List<int> favList = await mainProvider.getFavList();
+  var newList = List.of(favList);
+  // [1,4,5,0] hozirgi list
+  // [1,4,5] new list
+  newList.remove(index);
+
+  mainProvider.setFavList(newList);
+}
+}
+
 

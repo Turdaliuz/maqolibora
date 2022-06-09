@@ -26,36 +26,16 @@ class MainProvider extends ChangeNotifier {
 
   setFavourite(int index) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('fav_meal', index);
+    await prefs.setInt('fav_word', index);
   }
 
   Future<int?> getFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      if (prefs.containsKey('fav_meal')) {
-        return prefs.getInt('fav_meal');
+      if (prefs.containsKey('fav_word')) {
+        return prefs.getInt('fav_word');
       }
     }
-
-    // setFavList(List<int> indexes) async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   prefs.setStringList(
-    //     Constants.FAV_MEALS,
-    //     indexes.map((e) => e.toString()).toList(),
-    //   );
-    //   notifyListeners();
-    // }
-
-
-    // Future<List<int>> getFavList() async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   List<String>? res = prefs.getStringList(Constants.FAV_MEALS);
-    //   if (res != null) {
-    //     return res.map((e) => int.parse(e)).toList();
-    //   }
-    //   return List.empty();
-    //
-
 
 
 
@@ -74,5 +54,22 @@ class MainProvider extends ChangeNotifier {
       notifyListeners();
     }
 
-
+  setFavList(List<int> indexes) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(
+      'fav_word',
+      indexes.map((e) => e.toString()).toList(),
+    );
+    notifyListeners();
   }
+
+  Future<List<int>> getFavList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? res = prefs.getStringList('fav_word');
+    if (res != null) {
+      return res.map((e) => int.parse(e)).toList();
+    }
+    return List.empty();
+  }
+}
+

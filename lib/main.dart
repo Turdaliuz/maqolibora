@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ozbekcha_inglizcha_iboralar/screens/splash.dart';
 import 'package:ozbekcha_inglizcha_iboralar/settings/main_provider.dart';
 import 'package:ozbekcha_inglizcha_iboralar/screens/asosiy.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         themeMode: currentMode,
-        home: const Asosiy(),
+        home: const Splash(),
       );
     }
     );
