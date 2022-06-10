@@ -78,7 +78,7 @@ class DatabaseHelper {
     } else {
       result = await data?.query(
         tableName,
-        where: isSlovo! ?"rus LIKE ?":"uzb LIKE ?",
+        where: isSlovo! ? "rus LIKE ?" : "uzb LIKE ?",
         whereArgs: ["$word%"],
       );
     }
@@ -117,5 +117,23 @@ class DatabaseHelper {
       words.add(Word.fromMap(element));
     });
     return words;
+  }
+
+  Future<Word> getWordById(int id) async {
+    final data = await db;
+    final List<Map<String, Object?>>? result;
+
+    result = await data?.query(
+      tableName,
+      where: "id = ?",
+      whereArgs: ["$id"],
+    );
+
+    final List<Map<String, Object?>>? taskMap = result;
+    final List<Word> words = [];
+    taskMap?.forEach((element) {
+      words.add(Word.fromMap(element));
+    });
+    return words.first;
   }
 }

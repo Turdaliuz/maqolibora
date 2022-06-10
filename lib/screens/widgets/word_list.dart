@@ -41,7 +41,7 @@ class _WordListState extends State<WordList> {
           thickness: 8,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return WordItem(value.words[index], value.isWord);
+              return WordItem(value.words[index], isWord: value.isWord);
             },
             itemCount: value.words.length,
           ),

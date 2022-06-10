@@ -17,8 +17,6 @@ class Word {
     return map;
   }
 
-
-
   Word.fromMap(Map<String, Object?> map) {
     id = (map["id"] as int?);
     rus = (map["rus"] as String?);
@@ -29,4 +27,6 @@ class Word {
     rus = json["rus"];
     uzb = json["uzb"];
   }
+
+
 }

@@ -7,30 +7,33 @@ import 'package:ozbekcha_inglizcha_iboralar/screens/asosiy.dart';
 import 'package:ozbekcha_inglizcha_iboralar/screens/home.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({super.key});
+  const Splash({Key? key}) : super(key: key);
 
   @override
   State<Splash> createState() => _SplashState();
 }
-class _SplashState extends State<Splash> {
 
-@override
-void initState(){
-  // TODO implement initState
-  super.initState();
-  Timer(const Duration(seconds: 3), () {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Asosiy()));
-  });
-}
+class _SplashState extends State<Splash> {
+  @override
+  void initState() {
+    // TODO implement initState
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Asosiy()));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return
-      const Scaffold(  backgroundColor: Colors.blueGrey,
-        body: Center(
-      child: SpinKitRing(
-        color: Colors.white,
-        size: 100,
-      ),),
+    return const Scaffold(
+      backgroundColor: Colors.blueGrey,
+      body: Center(
+        child: SpinKitRing(
+          color: Colors.white,
+          size: 100,
+        ),
+      ),
     );
   }
 }

@@ -37,8 +37,6 @@ class MainProvider extends ChangeNotifier {
       }
     }
 
-
-
     initList({String? word, bool? isSlovo}) async {
       words.clear();
       if (word == null) {

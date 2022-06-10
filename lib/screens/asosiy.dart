@@ -33,7 +33,7 @@ class _AsosiyState extends State<Asosiy> {
 body: PageView(
   allowImplicitScrolling: false,
     controller: _pageController,
-    children: const <Widget>[
+    children: <Widget>[
       HomePage(),
       CategoryUz(),
       SavedUz(),

@@ -4,15 +4,35 @@ import 'package:ozbekcha_inglizcha_iboralar/screens/widgets/word_item.dart';
 import 'package:ozbekcha_inglizcha_iboralar/settings/main_provider.dart';
 import 'package:provider/provider.dart';
 
-class SavedUz extends StatelessWidget {
-  const SavedUz({Key? key}) : super(key: key);
+import '../settings/database_helper.dart';
+
+class SavedUz extends StatefulWidget {
+  SavedUz({Key? key}) : super(key: key);
+
+  @override
+  State<SavedUz> createState() => _SavedUzState();
+}
+
+class _SavedUzState extends State<SavedUz> {
+  final List<Word> words = [];
+  final List<int> indexes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getFavsIndexes();
+  }
+
+  getFavsIndexes() async {
+    final mainProvider = Provider.of<MainProvider>(context, listen: false);
+    indexes.addAll(await mainProvider.getFavList());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final mainProvider = Provider.of<MainProvider> (context, listen: false);
     return Consumer<MainProvider>(builder: (context, data, child) {
       return FutureBuilder(
-          future: mainProvider.getFavList(),
+          future: indexes,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -28,20 +48,22 @@ class SavedUz extends StatelessWidget {
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 32),
                   itemBuilder: (BuildContext context, int index) {
-                    return WordItem(
-                      Word.word[snapshot.data[index]],
-                      snapshot.data[index],
-                      isWord: true,
-                    );
+                    getFavs(context, snapshot.data[index]);
+                    return words.isNotEmpty
+                        ? WordItem(
+                            words.first,
+                            isWord: true,
+                          )
+                        : Container();
                   });
             }
           });
     });
   }
+
+  getFavs(context, id) async {
+    words.clear();
+    Word word = await DatabaseHelper.intance.getWordById(id);
+    words.add(word);
+  }
 }
-
-
-
-
-
-
